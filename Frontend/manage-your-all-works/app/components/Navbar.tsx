@@ -44,7 +44,13 @@ const NavBar: React.FC = () => {
         {isLoggedIn ? (
                   <ul className="linksul flex gap-10 text-md items-center justify-center text-black">
                   <li><a href="/dashboard">Dashboard</a></li>
-               
+                  <ul className="linksul flex gap-10 text-md items-center justify-center lg:visible invisible">
+          <li><a href="#HOME">Home</a></li>
+                 <li><a href="#ABOUT">About</a></li>
+                  <li><a href="#WHYME">Why Me?</a></li>
+                  <li><a href="#FAQS">FAQs</a></li>
+                  <li><a href="#CONTACT">Contact</a></li>
+           </ul>
                   </ul>
             ) : (
                 <>
@@ -59,13 +65,7 @@ const NavBar: React.FC = () => {
                 </>
             )}
 
-           <ul className="linksul flex gap-10 text-md items-center justify-center lg:visible invisible">
-{           <li><a href="#HOME">Home</a></li>
-}                  <li><a href="#ABOUT">About</a></li>
-                  <li><a href="#WHYME">Why Me?</a></li>
-                  <li><a href="#FAQS">FAQs</a></li>
-                  <li><a href="#CONTACT">Contact</a></li>
-           </ul>
+      
         </div>
         <div className="flex items-center justify-center gap-1 w-51">
             {isLoggedIn ? (
