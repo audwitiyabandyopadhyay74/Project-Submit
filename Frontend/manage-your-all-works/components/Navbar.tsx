@@ -1,81 +1,116 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import "./logo.css"; // Import the CSS file for Logo
 import axios from "axios";
-import { useRouter } from "next/navigation";
 
-const Navbar = () => {
-  const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userData, setUserData] = useState({ profilePicture: "" });
+const NavBar: React.FC = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userProfile, setUserProfile] = useState({
+        profilePicture: "/default-user-icon.png",
+        name: "",
+    });
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axios.post(
-          "http://localhost:5000/api/auth/checkAuth",
-          {},
-          { withCredentials: true }
-        );
-        if (response.status === 200) {
-          setIsAuthenticated(true);
-          setUserData(response.data);
-        }
-      } catch (error) {
-        console.error("User not authenticated");
-      }
-    };
-    checkAuth();
-  }, []);
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const response = await axios.post(
+                    "http://localhost:5000/api/auth/checkAuth",
+                    {},
+                    { withCredentials: true }
+                );
+                if (response.status === 200) {
+                    setIsLoggedIn(true);
+                    // Set the user's profile picture from the response
+                    setUserProfile({
+                        profilePicture: response.data.profilePicture || "/default-user-icon.png",
+                        name: response.data.name || "User"
+                    });
+                }
+            } catch (error) {
+                setIsLoggedIn(false);
+                console.log(error)
+            }
+        };
+        checkAuth();
+    }, []);
 
-  const handleLogout = async () => {
-    try {
-      await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
-      setIsAuthenticated(false);
-      router.push("/login");
-    } catch (error) {
-      console.error("Logout failed");
-    }
-  };
+    return (
+    <nav className="w-screen flex justify-evenly items-center fixed gap-48 z-100">
+        <div className="logo text-center w-max cursor-pointer">
+        <div className="circle"></div>
+        </div>
+        <div className="links w-[700px]">
+          
+        {isLoggedIn ? (
+                  <ul className="linksul flex gap-10 text-md items-center justify-center text-black">
+                  <li><a href="/dashboard">Dashboard</a></li>
+                  <ul className="linksul flex gap-10 text-md items-center justify-center lg:visible invisible">
+          <li><a href="#HOME">Home</a></li>
+                 <li><a href="#ABOUT">About</a></li>
+                  <li><a href="#WHYME">Why Me?</a></li>
+                  <li><a href="#FAQS">FAQs</a></li>
+                  <li><a href="#CONTACT">Contact</a></li>
+           </ul>
+                  </ul>
+            ) : (
+                <>
+                  <ul className="linksul flex gap-10 text-md items-center justify-center lg:visible invisible">
+                  <li><a href="#HOME">Home</a></li>
+                  <li><a href="#ABOUT">About</a></li>
+                  <li><a href="#WHYME">Why Me?</a></li>
+                  <li><a href="#FAQS">FAQs</a></li>
+                  <li><a href="#CONTACT">CONTACT</a></li>
 
-  return (
-    <nav className="flex justify-between items-center p-4 bg-gray-800 text-white">
-      <div className="text-xl font-bold">Manage Your Works</div>
-      <div className="flex items-center gap-4">
-        {!isAuthenticated ? (
-          <>
-            <a href="/login" className="hover:underline">
-              Login
-            </a>
-            <a href="/register" className="hover:underline">
-              Register
-            </a>
-          </>
-        ) : (
-          <div className="relative group">
-            <img
-              src={userData.profilePicture || "/default-avatar.png"}
-              alt="User"
-              className="w-10 h-10 rounded-full cursor-pointer"
-            />
-            <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded-md shadow-lg hidden group-hover:block">
-              <a
-                href="/profile"
-                className="block px-4 py-2 hover:bg-gray-200"
-              >
-                Profile
-              </a>
-              <button
-                onClick={handleLogout}
-                className="block w-full text-left px-4 py-2 hover:bg-gray-200"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        )}
+           </ul>
+                </>
+            )}
+
+      
+        </div>
+        <div className="flex items-center justify-center gap-1 w-51">
+            {isLoggedIn ? (
+                <a href="/profile" className="user-icon cursor-pointer">
+                    <img
+                        src={userProfile.profilePicture}
+                        alt={userProfile.name}
+                        className="w-10 h-10 rounded-full object-cover border-2 border-gray-200"
+                    />
+                </a>
+            ) : (
+                <>
+                    <button className="signup text-white w-28 h-10 rounded-md">
+                        Register
+                    </button>
+                   <a href="/login">
+                   <button className="login bg-white text-black w-28 h-10 rounded-md cursor-pointer hover:scale-110">
+                        Login
+                    </button>
+                    </a> 
+                </>
+            )}
+               <div className="lg:hidden z-1000 fixed bottom-0 left-0 right-0 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-50">
+        <nav className="flex justify-around items-center h-16">
+        {   isLoggedIn ? (
+                    <li className="text-black"><a href="/dashboard">Dashboard</a></li>
+            ) : (        <li><a href="#HOME">Home</a></li>)
+}  
+          <a href="#ABOUT" className="flex flex-col items-center text-black">
+            <span className="text-sm">About</span>
+          </a>
+          <a href="#WHYME" className="flex flex-col items-center text-black">
+            <span className="text-sm">Why Me?</span>
+          </a>
+          <a href="#FAQS" className="flex flex-col items-center text-black">
+            <span className="text-sm">FAQs</span>
+          </a>
+          <a href="#CONTACT" className="flex flex-col items-center text-black">
+            <span className="text-sm">Contact</span>
+          </a>
+        </nav>
       </div>
-    </nav>
-  );
+        </div>
+    </nav>);
 };
 
-export default Navbar;
+export default NavBar;
+
