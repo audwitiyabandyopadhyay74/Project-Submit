@@ -7,13 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+<<<<<<< HEAD
+    "vercel-build": "npm run prepare && next build"
+=======
  "vercel-build": "npm run prepare && next build" 
+>>>>>>> 725701163b7c1de7bc4b3c8396f4e9ba568bd2a4
   },
   "dependencies": {
     "axios": "^1.8.4",
     "framer-motion": "^12.7.4",
     "motion": "^12.7.4",
-    "next": "15.2.4",
+    "next": "^15.3.1",
     "ogl": "^1.0.11",
     "postprocessing": "^6.37.2",
     "react": "^19.0.0",
