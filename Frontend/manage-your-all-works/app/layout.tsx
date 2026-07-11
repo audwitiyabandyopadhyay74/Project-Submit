@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../styles/globals.css";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,9 +29,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-r from-blue-500 to-purple-500 text-white overflow-x-hidden`}>
         {children}
 
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        {/* Lazy load Tailwind browser script */}
+        <Script
+          id="tailwind-browser"
+          strategy="afterInteractive"
+          src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"
+        />
 
       </body>
     </html>
   );
 }
+
