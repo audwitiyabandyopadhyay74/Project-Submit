@@ -109,27 +109,27 @@ function nsin(val: number) {
   return Math.sin(val) * 0.5 + 0.5;
 }
 
-const mountainUniforms = {
+const mountainUniforms: Record<string, { value: THREE.Vector3 }> = {
   uFreq: { value: new THREE.Vector3(3, 6, 10) },
   uAmp: { value: new THREE.Vector3(30, 30, 20) },
 };
 
-const xyUniforms = {
+const xyUniforms: Record<string, { value: THREE.Vector2 }> = {
   uFreq: { value: new THREE.Vector2(5, 2) },
   uAmp: { value: new THREE.Vector2(25, 15) },
 };
 
-const LongRaceUniforms = {
+const LongRaceUniforms: Record<string, { value: THREE.Vector2 }> = {
   uFreq: { value: new THREE.Vector2(2, 3) },
   uAmp: { value: new THREE.Vector2(35, 10) },
 };
 
-const turbulentUniforms = {
+const turbulentUniforms: Record<string, { value: THREE.Vector4 }> = {
   uFreq: { value: new THREE.Vector4(4, 8, 8, 1) },
   uAmp: { value: new THREE.Vector4(25, 5, 10, 10) },
 };
 
-const deepUniforms = {
+const deepUniforms: Record<string, { value: THREE.Vector2 | THREE.Vector4 }> = {
   uFreq: { value: new THREE.Vector2(4, 8) },
   uAmp: { value: new THREE.Vector2(10, 20) },
   uPowY: { value: new THREE.Vector2(20, 2) },
@@ -402,7 +402,7 @@ const distortions: Distortions = {
   },
 };
 
-const distortion_uniforms = {
+const distortion_uniforms: Record<string, { value: THREE.Vector2 }> = {
   uDistortionX: { value: new THREE.Vector2(80, 3) },
   uDistortionY: { value: new THREE.Vector2(-40, 2.5) },
 };
@@ -574,7 +574,7 @@ class CarLights {
       ),
     });
 
-    material.onBeforeCompile = (shader) => {
+    material.onBeforeCompile = (shader: any) => {
       shader.vertexShader = shader.vertexShader.replace(
         "#include <getDistortion_vertex>",
         typeof this.options.distortion === "object"
@@ -717,11 +717,11 @@ class LightsSticks {
       ),
     });
 
-    material.onBeforeCompile = (shader) => {
+    material.onBeforeCompile = (shader: any) => {
       shader.vertexShader = shader.vertexShader.replace(
         "#include <getDistortion_vertex>",
-        typeof this.options.distortion === "object"
-          ? this.options.distortion.getDistortion
+        typeof options.distortion === "object"
+          ? options.distortion.getDistortion
           : ""
       );
     };
@@ -859,7 +859,7 @@ class Road {
       ),
     });
 
-    material.onBeforeCompile = (shader) => {
+    material.onBeforeCompile = (shader: any) => {
       shader.vertexShader = shader.vertexShader.replace(
         "#include <getDistortion_vertex>",
         typeof this.options.distortion === "object"
