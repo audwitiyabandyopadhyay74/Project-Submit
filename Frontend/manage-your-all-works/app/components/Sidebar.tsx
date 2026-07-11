@@ -3,6 +3,7 @@ import { MdOutlineModeEditOutline } from "react-icons/md";
 import { IoIosDocument } from "react-icons/io";
 import { AiOutlineStock } from "react-icons/ai";
 import { TbPhotoEdit } from "react-icons/tb";
+import Script from 'next/script';
 
 const Sidebar = () => {
   const menuItems = [
@@ -56,8 +57,13 @@ const Sidebar = () => {
 
       {/* Spacer for mobile bottom navigation */}
       <div className="h-16 lg:hidden" />
-      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
+      {/* Lazy load Tailwind browser script */}
+      <Script
+        id="tailwind-browser"
+        strategy="afterInteractive"
+        src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"
+      />
     </>
   );
 };
