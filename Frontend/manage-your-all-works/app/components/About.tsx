@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from "motion/react"; // Corrected imp
 const WhatWillYouGet: React.FC = () => {
   const { scrollYProgress } = useScroll(); // Destructure scrollYProgress
   const MAHADEV = -450;
-  const translateY = useTransform(scrollYProgress, [0, 1], [0, MAHADEV]); // Map scroll progress to upward motion
+  // const translateY = useTransform(scrollYProgress, [0, 1], [0, MAHADEV]);  Map scroll progress to upward motion
 
   return (
     <div className="w-screen h-[100vh] flex  items-center justify-center" id='ABOUT'>
